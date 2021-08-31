@@ -21,19 +21,41 @@
     color: var(--header-color);
   }
   &__messages {
+    height: var(--max-messages-height);
+    overflow-y: auto;
     padding-inline: 15px;
     padding-block: 15px;
   }
   &__message {
     padding-inline: 10px;
     padding-block: 10px;
-    border-bottom: 1px dashed;
+    animation: .4s smooth-to-right ease-in-out alternate;
+    border-radius: 15px;
+    margin-top: 10px;
+
+    @keyframes smooth-to-right {
+      0% {
+        opacity: 0;
+        transform: translate(-40px)
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0)
+      }
+    }
     &:last-child {
       border: none;
     }
     &_from {
-      background: yellow;
+      background: #ececec;
     }
+  }
+  &__message-date {
+    font-size: 12px;
+    color: gray;
+  }
+  &__message-text {
+    padding-top: 10px;
   }
   &__input-field {
     padding-inline: 15px;
