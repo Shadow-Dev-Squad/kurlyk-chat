@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
-    "start-server": "tsc src/server/server.ts && node src/server/server.ts",
+    "server:build": "tsc src/server/server.ts",
+    "server:start": "node src/server/server.ts",
     "cypress:open": "cypress open"
   },
   "dependencies": {
