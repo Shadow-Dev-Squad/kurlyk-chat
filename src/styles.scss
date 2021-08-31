@@ -1,0 +1,49 @@
+@import "base";
+@import "variables";
+
+.chat {
+  width: var(--chat-width);
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  //box-shadow: var(--chat-shadow);
+  box-shadow: 1px 2px 10px #000;
+  border-radius: var(--round-radius);
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--black-color);
+    height: var(--header-height);
+    border-top-left-radius: var(--round-radius);
+    border-top-right-radius: var(--round-radius);
+    padding-inline: 15px;
+    color: var(--header-color);
+  }
+  &__messages {
+    padding-inline: 15px;
+    padding-block: 15px;
+  }
+  &__message {
+    padding-inline: 10px;
+    padding-block: 10px;
+    border-bottom: 1px dashed;
+    &:last-child {
+      border: none;
+    }
+    &_from {
+      background: yellow;
+    }
+  }
+  &__input-field {
+    padding-inline: 15px;
+    padding-block: 15px;
+  }
+  &__input {
+    width: 100%;
+    padding-inline: 10px;
+    padding-block: 10px;
+    border-radius: var(--round-radius);
+    border: 1px solid grey;
+  }
+}
