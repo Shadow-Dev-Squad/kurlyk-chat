@@ -1,5 +1,7 @@
 const Websocket = require('ws')
 const wsServer = new Websocket.Server({ port: 9000 })
+// eslint-disable-next-line no-console
+console.log('server started on localhost:9000')
 wsServer.on('connection', onConnect)
 
 function onConnect(wsClient) {
