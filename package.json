@@ -6,10 +6,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html",
+    "start-server": "node src/server/server.js"
   },
   "dependencies": {
-    "parcel": "^2.0.0-rc.0"
+    "parcel": "^2.0.0-rc.0",
+    "ws": "^8.2.1"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.0.0-rc.0"
