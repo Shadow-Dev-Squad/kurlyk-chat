@@ -5,8 +5,7 @@
   "author": "martiiian <jkramorevx@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "dev": "parcel src/index.pug",
     "server:build": "tsc src/server/server.ts",
     "server:start": "node src/server/server.ts",
     "cypress:open": "cypress open"
@@ -16,6 +15,7 @@
     "ws": "^8.2.1"
   },
   "devDependencies": {
+    "@parcel/transformer-pug": "2.0.0-rc.0",
     "@parcel/transformer-sass": "2.0.0-rc.0",
     "cypress": "^8.3.1",
     "typescript": "^4.4.2"
