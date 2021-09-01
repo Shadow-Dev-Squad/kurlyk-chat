@@ -7,13 +7,14 @@
   "scripts": {
     "dev": "parcel src/index.pug",
     "server:build": "tsc src/server/server.ts",
-    "server:start": "node src/server/server.ts",
+    "server:start": "node src/server/server.js",
     "cypress:open": "cypress open",
     "prettier": "prettier --write ."
   },
   "dependencies": {
     "parcel": "^2.0.0-rc.0",
-    "ws": "^8.2.1"
+    "ws": "^8.2.1",
+    "@types/ws": "^7.4.7"
   },
   "devDependencies": {
     "@parcel/transformer-pug": "2.0.0-rc.0",
