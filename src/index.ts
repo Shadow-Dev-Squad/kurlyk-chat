@@ -1,4 +1,4 @@
-import { createMessage, Message } from './components/message'
+import { Message, IMessage } from './components/message'
 
 function initChat() {
   const $messages = document.getElementsByClassName(
@@ -16,12 +16,12 @@ function initChat() {
 
     const $input = e.currentTarget as HTMLInputElement
 
-    const message: Message = {
+    const message: IMessage = {
       text: $input.value,
       date: String(new Date()),
     }
 
-    $messages.appendChild(createMessage(message))
+    $messages.appendChild(Message.create(message))
 
     $input.value = ''
   })
@@ -41,8 +41,8 @@ function initSockets($messages: HTMLDivElement) {
   ws.onmessage = ({ data }: { data: unknown }) => {
     if (!data || typeof data !== 'string') return
 
-    const messageData = JSON.parse(data) as Message
-    $messages.append(createMessage(messageData, true))
+    const message = JSON.parse(data) as IMessage
+    $messages.append(Message.create(message, true))
     $messages.scrollTo(0, $messages.scrollHeight)
   }
 
