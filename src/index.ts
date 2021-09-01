@@ -53,6 +53,7 @@ function initSockets($messages: HTMLDivElement) {
 }
 
 function initApp() {
+  customElements.define('chat-message', Message)
   const { $messages } = initChat()
   initSockets($messages)
 }

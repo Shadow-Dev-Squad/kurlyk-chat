@@ -4,30 +4,35 @@ export interface IMessage {
   text: string
 }
 
-export class Message {
-  private readonly $message: HTMLDivElement
+export class Message extends HTMLElement {
+  constructor() {
+    super()
 
-  private constructor(private message: IMessage, received) {
-    this.$message = this.createDiv()
-    this.$message.classList.add('chat__message')
+    const $shadow = this.attachShadow({ mode: 'open' })
+    const received = !!this.getAttribute('received')
+
+    const $message = this.createMessage(
+      {
+        date: this.getAttribute('date'),
+        text: this.getAttribute('text'),
+      },
+      received
+    )
+
+    $shadow.append($message)
+  }
+
+  createMessage(message: IMessage, received = false) {
+    const $message = this.createDiv()
+    $message.classList.add('chat__message')
     if (received) {
-      this.$message.classList.add('chat__message_from')
+      $message.classList.add('chat__message_from')
     }
 
-    this.$message.append(this.createMessageDate(message.date))
-    this.$message.append(this.createMessageText(message.text))
-  }
+    $message.append(this.createMessageDate(message.date))
+    $message.append(this.createMessageText(message.text))
 
-  static create(message: IMessage, received = false): HTMLDivElement {
-    return new Message(message, received).getNode()
-  }
-
-  getNode() {
-    return this.$message
-  }
-
-  createDiv(): HTMLDivElement {
-    return document.createElement('div') as HTMLDivElement
+    return $message
   }
 
   createMessageText(text): HTMLDivElement {
@@ -42,5 +47,21 @@ export class Message {
     $messageText.classList.add('chat__message-date')
     $messageText.innerText = date
     return $messageText
+  }
+
+  createDiv(): HTMLDivElement {
+    return document.createElement('div') as HTMLDivElement
+  }
+
+  static create(message: IMessage, received = false): HTMLElement {
+    const $chatMessage = document.createElement('chat-message')
+
+    $chatMessage.setAttribute('text', message.text)
+    $chatMessage.setAttribute('date', message.date)
+    if (received) {
+      $chatMessage.setAttribute('received', 'true')
+    }
+
+    return $chatMessage
   }
 }
