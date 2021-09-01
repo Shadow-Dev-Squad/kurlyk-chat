@@ -881,6 +881,13 @@
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
 
+"@prettier/plugin-pug@^1.16.5":
+  version "1.16.5"
+  resolved "https://registry.yarnpkg.com/@prettier/plugin-pug/-/plugin-pug-1.16.5.tgz#6d55c17323150b31c608b5c5417a351a6b749c5e"
+  integrity sha512-Q/LTDjtM/PWsY9sED5/FcIJOca0z9GvHN8b80VZWDO4DtWooytm9biUEHDEP9Qn3MNNxsNN431MCdCGkWmPumg==
+  dependencies:
+    pug-lexer "^5.0.0"
+
 "@swc/helpers@^0.2.11":
   version "0.2.13"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.2.13.tgz#95d69aaed0998040d455832efbe1342ed79d0809"
@@ -4625,7 +4632,7 @@ pug-filters@^4.0.0:
     pug-walk "^2.0.0"
     resolve "^1.15.1"
 
-pug-lexer@^5.0.1:
+pug-lexer@^5.0.0, pug-lexer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/pug-lexer/-/pug-lexer-5.0.1.tgz#ae44628c5bef9b190b665683b288ca9024b8b0d5"
   integrity sha512-0I6C62+keXlZPZkOJeVam9aBLVP2EnbeDw3An+k0/QlqdwH6rv8284nko14Na7c0TtqtogfWXcRoFE4O4Ff20w==

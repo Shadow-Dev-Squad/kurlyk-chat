@@ -1,24 +1,27 @@
 doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(
-            name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-        )
-        meta(http-equiv="X-UA-Compatible" content="ie=edge")
-        title Hello Luxi Chat
-        link(rel="stylesheet" href="./styles/styles.scss")
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(
+      name='viewport',
+      content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'
+    )
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    title Hello Luxi Chat
+    link(rel='stylesheet', href='./styles/styles.scss')
 
-    body
-        .chat(data-cy="chat")
-            .chat__header Luxi Support
-            .chat__hello-body
-                form.chat__hello-form(id="hello_form")
-                    input.chat__hello-input(name="name" placeholder="Input your Nickname ^^)")
-                    button.chat__hello-button Go
-            .chat__body.hidden
-                .chat__messages
-                .chat__input-field
-                    input.chat__input
-        script(src="./index.ts" type="module")
+  body
+    .chat(data-cy='chat')
+      .chat__header Luxi Support
+      .chat__hello-body
+        form#hello_form.chat__hello-form
+          input.chat__hello-input(
+            name='name',
+            placeholder='Input your Nickname ^^)'
+          )
+          button.chat__hello-button Go
+      .chat__body.hidden
+        .chat__messages
+        .chat__input-field
+          input.chat__input
+    script(src='./index.ts', type='module')
