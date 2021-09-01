@@ -1,43 +1,13 @@
-interface Message {
-  id?: string;
-  date: string;
-  text: string;
-}
-
-function createDiv(): HTMLDivElement {
-  return document.createElement('div') as HTMLDivElement
-}
-
-function createMessageText(text): HTMLDivElement {
-  const $messageText = createDiv()
-  $messageText.classList.add('chat__message-text')
-  $messageText.innerText = text
-  return $messageText
-}
-
-function createMessageDate(date): HTMLDivElement {
-  const $messageText = createDiv()
-  $messageText.classList.add('chat__message-date')
-  $messageText.innerText = date
-  return $messageText
-}
-
-function createMessage(message: Message, received: boolean = false): HTMLDivElement {
-  const $message = createDiv()
-  $message.classList.add('chat__message')
-  if (received) {
-    $message.classList.add('chat__message_from')
-  }
-
-  $message.append(createMessageDate(message.date))
-  $message.append(createMessageText(message.text))
-
-  return $message
-}
+import { createMessage, Message } from './components/message'
 
 function initChat() {
-  const $messages = document.getElementsByClassName('chat__messages')[0] as HTMLDivElement
-  const $messageInput = document.getElementsByClassName('chat__input')[0] as HTMLInputElement
+  const $messages = document.getElementsByClassName(
+    'chat__messages'
+  )[0] as HTMLDivElement
+
+  const $messageInput = document.getElementsByClassName(
+    'chat__input'
+  )[0] as HTMLInputElement
 
   if (!$messageInput || !$messages) return
 
@@ -48,7 +18,7 @@ function initChat() {
 
     const message: Message = {
       text: $input.value,
-      date: String(new Date())
+      date: String(new Date()),
     }
 
     $messages.appendChild(createMessage(message))
@@ -57,7 +27,7 @@ function initChat() {
   })
 
   return {
-    $messages
+    $messages,
   }
 }
 
