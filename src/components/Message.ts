@@ -114,27 +114,10 @@ export class Message extends HTMLElement {
   // callbacks //
 
   connectedCallback() {
-    // eslint-disable-next-line no-console
-    console.log('connected message')
     this.$text.innerText = this.getAttribute('text')
     this.$date.innerText = this.getAttribute('date')
     if (this.getAttribute('received')) {
       this.$message.classList.add('message_from')
     }
-  }
-
-  disconnectedCallback() {
-    // eslint-disable-next-line no-console
-    console.log('disconnected')
-  }
-
-  adoptedCallback() {
-    // eslint-disable-next-line no-console
-    console.log('adopted message')
-  }
-
-  attributeChangedCallback() {
-    // eslint-disable-next-line no-console
-    console.log('watch attribute callback')
   }
 }

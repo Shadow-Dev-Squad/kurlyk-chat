@@ -6,29 +6,57 @@ import {
   WsMessageMessage,
   WsMessageTypes,
 } from './types'
+import { state } from './state'
 
 const socketHost = process.env.WS_HOST
 
-const $dom = {
+const selectors = {
   form: '#hello_form',
   nickInput: '.chat__hello-input',
   messages: '.chat__messages',
   chatInput: '.chat__input',
   chatBody: '.chat__body',
   helloBody: '.chat__hello-body',
+  status: '.chat__status',
 }
 
-interface State {
-  users: string[]
-  userId: string
+function openBody() {
+  state.$dom.$body && state.$dom.$body.classList.remove('hidden')
 }
 
-const state: State = {
-  users: [],
-  userId: null,
+function hideHelloBody() {
+  state.$dom.$helloBody && state.$dom.$helloBody.classList.add('hidden')
 }
 
-function initSockets($messages: HTMLDivElement, nickName: string) {
+function toggleOnlineStatus(value: boolean) {
+  if (!state.$dom.$status) return
+
+  if (value) {
+    state.$dom.$status.classList.add('chat__status_active')
+  }
+}
+
+function parseMessage({ data }: { data: unknown }) {
+  if (!data || typeof data !== 'string') return
+
+  const message = JSON.parse(data) as WsMessage
+  switch (message.type) {
+    case WsMessageTypes.message:
+      if (!state.$dom.$messages) return
+
+      state.$dom.$messages.append(Message.create(message.payload, true))
+      state.$dom.$messages.scrollTo(0, state.$dom.$messages.scrollHeight)
+      break
+
+    case WsMessageTypes.userList:
+      state.users = message.payload.users.filter(
+        (userName) => userName !== state.userId
+      )
+      break
+  }
+}
+
+function initSockets(nickName: string) {
   const ws = new WebSocket(socketHost)
   state.userId = nickName
 
@@ -41,59 +69,43 @@ function initSockets($messages: HTMLDivElement, nickName: string) {
     }
 
     ws.send(JSON.stringify(connectionMessage))
+
+    hideHelloBody()
+    openBody()
+
+    toggleOnlineStatus(true)
   }
 
-  ws.onmessage = ({ data }: { data: unknown }) => {
-    if (!data || typeof data !== 'string') return
+  ws.onmessage = parseMessage
 
-    const message = JSON.parse(data) as WsMessage
-    switch (message.type) {
-      case WsMessageTypes.message:
-        $messages.append(Message.create(message.payload, true))
-        $messages.scrollTo(0, $messages.scrollHeight)
-        break
-
-      case WsMessageTypes.userList:
-        state.users = message.payload.users.filter(
-          (userName) => userName !== nickName
-        )
-        break
-    }
+  ws.onclose = () => {
+    toggleOnlineStatus(false)
   }
-
-  ws.onclose = () => {}
 
   return ws
 }
 
 function waitNickname(): Promise<string> {
   return new Promise((resolve) => {
-    const $form = document.querySelector($dom.form)
+    const $form = document.querySelector(selectors.form)
     if (!$form) return
 
     $form.addEventListener('submit', (e) => {
       e.preventDefault()
-      const $input = document.querySelector($dom.nickInput) as HTMLInputElement
+      const $input = document.querySelector(
+        selectors.nickInput
+      ) as HTMLInputElement
       if (!$input && !$input.value) return
 
-      const $body = document.querySelector($dom.chatBody)
-      $body && $body.classList.remove('hidden')
-
-      const $helloBody = document.querySelector($dom.helloBody)
-      $helloBody && $helloBody.classList.add('hidden')
       resolve($input.value)
     })
   })
 }
 
-function initMessageInput(
-  $messages: HTMLDivElement,
-  $messageInput: HTMLDivElement,
-  ws: WebSocket
-): HTMLDivElement | null {
-  if (!$messageInput || !$messages) return null
+function initMessageInput(ws: WebSocket) {
+  if (!state.$dom.$messageInput || !state.$dom.$messages) return null
 
-  $messageInput.addEventListener('keydown', (e) => {
+  state.$dom.$messageInput.addEventListener('keydown', (e) => {
     if (
       e.key !== 'Enter' ||
       !e.currentTarget ||
@@ -109,7 +121,7 @@ function initMessageInput(
       date: String(new Date()),
     }
 
-    $messages.appendChild(Message.create(message))
+    state.$dom.$messages.appendChild(Message.create(message))
 
     const wsMessage: WsMessageMessage = {
       type: WsMessageTypes.message,
@@ -122,20 +134,23 @@ function initMessageInput(
 
     $input.value = ''
   })
+}
 
-  return $messages
+function initDom() {
+  customElements.define('chat-message', Message)
+
+  state.$dom.$messages = document.querySelector(selectors.messages)
+  state.$dom.$messageInput = document.querySelector(selectors.chatInput)
+  state.$dom.$status = document.querySelector(selectors.status)
+  state.$dom.$body = document.querySelector(selectors.chatBody)
+  state.$dom.$helloBody = document.querySelector(selectors.helloBody)
 }
 
 async function initApp() {
-  customElements.define('chat-message', Message)
+  initDom()
 
-  const $messages = document.querySelector($dom.messages) as HTMLDivElement
-  const $messageInput = document.querySelector($dom.chatInput) as HTMLDivElement
-  const nickName = await waitNickname()
-
-  if (!$messages) return
-  const ws = initSockets($messages, nickName)
-  initMessageInput($messages, $messageInput, ws)
+  const ws = initSockets(await waitNickname())
+  initMessageInput(ws)
 }
 
 window.addEventListener('load', initApp)

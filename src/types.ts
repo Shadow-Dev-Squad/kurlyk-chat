@@ -1,3 +1,9 @@
+export interface State {
+  users: string[]
+  userId: string
+  $dom: { [key: string]: null | HTMLElement }
+}
+
 export enum WsMessageTypes {
   message = 'message',
   connection = 'connection',
