@@ -13,7 +13,11 @@ html(lang="en")
     body
         .chat(data-cy="chat")
             .chat__header Luxi Support
-            .chat__body
+            .chat__hello-body
+                form.chat__hello-form(id="hello_form")
+                    input.chat__hello-input(name="name" placeholder="Input your Nickname ^^)")
+                    button.chat__hello-button Go
+            .chat__body.hidden
                 .chat__messages
                 .chat__input-field
                     input.chat__input

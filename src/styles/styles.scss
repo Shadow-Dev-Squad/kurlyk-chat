@@ -26,7 +26,6 @@
     padding-inline: 15px;
     padding-block: 15px;
   }
-
   &__input-field {
     padding-inline: 15px;
     padding-block: 15px;
@@ -37,5 +36,34 @@
     padding-block: 10px;
     border-radius: var(--round-radius);
     border: 1px solid grey;
+  }
+  .hidden {
+    display: none;
+  }
+  &__hello-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__hello-form {
+    justify-content: center;
+    padding-block: 20px;
+    padding-inline: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__hello-input {
+    padding-inline: 10px;
+    padding-block: 5px;
+    width: 100%;
+  }
+  &__hello-button {
+    margin-top: 10px;
+    padding-inline: 15px;
+    padding-block: 10px;
+    background: green;
+    color: white;
+    font-size: 13px;
+    border: none;
   }
 }

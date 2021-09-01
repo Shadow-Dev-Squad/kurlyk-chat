@@ -1,8 +1,4 @@
-export interface IMessage {
-  id?: string
-  date: string
-  text: string
-}
+import { IMessage } from '../types'
 
 export class Message extends HTMLElement {
   $date: HTMLDivElement
@@ -122,6 +118,9 @@ export class Message extends HTMLElement {
     console.log('connected message')
     this.$text.innerText = this.getAttribute('text')
     this.$date.innerText = this.getAttribute('date')
+    if (this.getAttribute('received')) {
+      this.$message.classList.add('message_from')
+    }
   }
 
   disconnectedCallback() {
