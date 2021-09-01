@@ -7,6 +7,8 @@ import {
   WsMessageTypes,
 } from './types'
 
+const socketHost = process.env.WS_HOST
+
 const $dom = {
   form: '#hello_form',
   nickInput: '.chat__hello-input',
