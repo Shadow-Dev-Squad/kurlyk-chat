@@ -18,13 +18,20 @@ const $dom = {
   helloBody: '.chat__hello-body',
 }
 
-let users: string[] = []
-let userId: string
+interface State {
+  users: string[]
+  userId: string
+}
+
+const state: State = {
+  users: [],
+  userId: null,
+}
 
 function initSockets($messages: HTMLDivElement, nickName: string) {
-  const ws = new WebSocket('ws://localhost:9000')
+  const ws = new WebSocket(socketHost)
+  state.userId = nickName
 
-  userId = nickName
   ws.onopen = () => {
     const connectionMessage: WsMessageConnection = {
       type: WsMessageTypes.connection,
@@ -47,17 +54,14 @@ function initSockets($messages: HTMLDivElement, nickName: string) {
         break
 
       case WsMessageTypes.userList:
-        users = message.payload.users.filter(
+        state.users = message.payload.users.filter(
           (userName) => userName !== nickName
         )
         break
     }
   }
 
-  ws.onclose = () => {
-    // eslint-disable-next-line no-console
-    console.log('connection closed')
-  }
+  ws.onclose = () => {}
 
   return ws
 }
@@ -82,7 +86,7 @@ function waitNickname(): Promise<string> {
   })
 }
 
-function initChat(
+function initMessageInput(
   $messages: HTMLDivElement,
   $messageInput: HTMLDivElement,
   ws: WebSocket
@@ -90,7 +94,12 @@ function initChat(
   if (!$messageInput || !$messages) return null
 
   $messageInput.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter' || !e.currentTarget || !users.length || !userId)
+    if (
+      e.key !== 'Enter' ||
+      !e.currentTarget ||
+      !state.users.length ||
+      !state.userId
+    )
       return
 
     const $input = e.currentTarget as HTMLInputElement
@@ -104,8 +113,8 @@ function initChat(
 
     const wsMessage: WsMessageMessage = {
       type: WsMessageTypes.message,
-      to: users[0],
-      from: userId,
+      to: state.users[0],
+      from: state.userId,
       payload: message,
     }
 
@@ -126,7 +135,7 @@ async function initApp() {
 
   if (!$messages) return
   const ws = initSockets($messages, nickName)
-  initChat($messages, $messageInput, ws)
+  initMessageInput($messages, $messageInput, ws)
 }
 
 window.addEventListener('load', initApp)
