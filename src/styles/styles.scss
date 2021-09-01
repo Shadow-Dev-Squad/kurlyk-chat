@@ -1,5 +1,5 @@
-@import "base";
-@import "variables";
+@import 'base';
+@import 'variables';
 
 .chat {
   width: var(--chat-width);
@@ -29,18 +29,18 @@
   &__message {
     padding-inline: 10px;
     padding-block: 10px;
-    animation: .4s smooth-to-right ease-in-out alternate;
+    animation: 0.4s smooth-to-right ease-in-out alternate;
     border-radius: 15px;
     margin-top: 10px;
 
     @keyframes smooth-to-right {
       0% {
         opacity: 0;
-        transform: translate(-40px)
+        transform: translate(-40px);
       }
       100% {
         opacity: 1;
-        transform: translate(0)
+        transform: translate(0);
       }
     }
     &:last-child {

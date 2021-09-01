@@ -8,7 +8,8 @@
     "dev": "parcel src/index.pug",
     "server:build": "tsc src/server/server.ts",
     "server:start": "node src/server/server.ts",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "parcel": "^2.0.0-rc.0",
@@ -18,6 +19,7 @@
     "@parcel/transformer-pug": "2.0.0-rc.0",
     "@parcel/transformer-sass": "2.0.0-rc.0",
     "cypress": "^8.3.1",
+    "prettier": "^2.3.2",
     "typescript": "^4.4.2"
   }
 }
