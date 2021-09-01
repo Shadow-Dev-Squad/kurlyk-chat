@@ -5,13 +5,17 @@ export interface IMessage {
 }
 
 export class Message extends HTMLElement {
+  $date: HTMLDivElement
+  $message: HTMLDivElement
+  $text: HTMLDivElement
+
   constructor() {
     super()
 
     const $shadow = this.attachShadow({ mode: 'open' })
     const received = !!this.getAttribute('received')
 
-    const $message = this.createMessage(
+    this.$message = this.createMessage(
       {
         date: this.getAttribute('date'),
         text: this.getAttribute('text'),
@@ -19,38 +23,89 @@ export class Message extends HTMLElement {
       received
     )
 
-    $shadow.append($message)
+    const $styles = document.createElement('style')
+    $styles.innerText = this.styles()
+
+    $shadow.append($styles, this.$message)
   }
 
   createMessage(message: IMessage, received = false) {
     const $message = this.createDiv()
-    $message.classList.add('chat__message')
+    $message.classList.add('message')
     if (received) {
-      $message.classList.add('chat__message_from')
+      $message.classList.add('message_from')
     }
 
-    $message.append(this.createMessageDate(message.date))
-    $message.append(this.createMessageText(message.text))
+    this.$date = this.createMessageDate(message.date)
+    this.$text = this.createMessageText(message.text)
+
+    $message.append(this.$date)
+    $message.append(this.$text)
 
     return $message
   }
 
+  styles() {
+    return `
+      @keyframes smooth-to-right {
+        0% {
+          opacity: 0;
+          transform: translate(-40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(0);
+        }
+      }
+      
+      .message {
+        padding-inline: 10px;
+        padding-block: 10px;
+        animation: 0.4s smooth-to-right ease-in-out alternate;
+        border-radius: 15px;
+        margin-top: 10px;
+      }
+      
+      .message:last-child {
+        border: none;
+      }
+      
+      .message_from {
+        background: #ececec;
+      }
+      
+      .date {
+        font-size: 12px;
+        color: gray;
+      }
+      
+      .text {
+        padding-top: 10px;
+      }
+    `
+  }
+
   createMessageText(text): HTMLDivElement {
     const $messageText = this.createDiv()
-    $messageText.classList.add('chat__message-text')
+    $messageText.classList.add('text')
     $messageText.innerText = text
     return $messageText
   }
 
   createMessageDate(date): HTMLDivElement {
     const $messageText = this.createDiv()
-    $messageText.classList.add('chat__message-date')
+    $messageText.classList.add('date')
     $messageText.innerText = date
     return $messageText
   }
 
   createDiv(): HTMLDivElement {
     return document.createElement('div') as HTMLDivElement
+  }
+
+  connectedCallback() {
+    this.$text.innerText = this.getAttribute('text')
+    this.$date.innerText = this.getAttribute('date')
   }
 
   static create(message: IMessage, received = false): HTMLElement {
