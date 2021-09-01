@@ -1,4 +1,4 @@
-import { Message, IMessage } from './components/message'
+import { Message, IMessage } from './components/Message'
 
 function initChat() {
   const $messages = document.getElementsByClassName(

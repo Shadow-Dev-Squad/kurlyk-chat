@@ -103,11 +103,6 @@ export class Message extends HTMLElement {
     return document.createElement('div') as HTMLDivElement
   }
 
-  connectedCallback() {
-    this.$text.innerText = this.getAttribute('text')
-    this.$date.innerText = this.getAttribute('date')
-  }
-
   static create(message: IMessage, received = false): HTMLElement {
     const $chatMessage = document.createElement('chat-message')
 
@@ -118,5 +113,29 @@ export class Message extends HTMLElement {
     }
 
     return $chatMessage
+  }
+
+  // callbacks //
+
+  connectedCallback() {
+    // eslint-disable-next-line no-console
+    console.log('connected message')
+    this.$text.innerText = this.getAttribute('text')
+    this.$date.innerText = this.getAttribute('date')
+  }
+
+  disconnectedCallback() {
+    // eslint-disable-next-line no-console
+    console.log('disconnected')
+  }
+
+  adoptedCallback() {
+    // eslint-disable-next-line no-console
+    console.log('adopted message')
+  }
+
+  attributeChangedCallback() {
+    // eslint-disable-next-line no-console
+    console.log('watch attribute callback')
   }
 }
