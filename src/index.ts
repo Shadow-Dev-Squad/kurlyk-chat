@@ -7,6 +7,7 @@ import {
   WsMessageTypes,
 } from './types'
 import { state } from './state'
+import { SocketService } from './services/SocketService'
 
 const socketHost = process.env.WS_HOST
 
@@ -57,10 +58,10 @@ function parseMessage({ data }: { data: unknown }) {
 }
 
 function initSockets(nickName: string) {
-  const ws = new WebSocket(socketHost)
+  const ws = new SocketService(socketHost)
   state.userId = nickName
 
-  ws.onopen = () => {
+  ws.on('open', () => {
     const connectionMessage: WsMessageConnection = {
       type: WsMessageTypes.connection,
       payload: {
@@ -68,19 +69,16 @@ function initSockets(nickName: string) {
       },
     }
 
-    ws.send(JSON.stringify(connectionMessage))
+    ws.send(connectionMessage)
 
     hideHelloBody()
     openBody()
-
     toggleOnlineStatus(true)
-  }
+  })
 
-  ws.onmessage = parseMessage
+  ws.on('message', parseMessage)
 
-  ws.onclose = () => {
-    toggleOnlineStatus(false)
-  }
+  ws.on('close', () => toggleOnlineStatus(false))
 
   return ws
 }
@@ -102,7 +100,7 @@ function waitNickname(): Promise<string> {
   })
 }
 
-function initMessageInput(ws: WebSocket) {
+function initMessageInput(ws: SocketService) {
   if (!state.$dom.$messageInput || !state.$dom.$messages) return null
 
   state.$dom.$messageInput.addEventListener('keydown', (e) => {
@@ -130,7 +128,7 @@ function initMessageInput(ws: WebSocket) {
       payload: message,
     }
 
-    ws.send(JSON.stringify(wsMessage))
+    ws.send(wsMessage)
 
     $input.value = ''
   })
