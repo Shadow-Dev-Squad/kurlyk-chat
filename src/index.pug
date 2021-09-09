@@ -1,28 +1,29 @@
 doctype html
-html(lang='en')
+html(lang="en")
   head
-    meta(charset='UTF-8')
+    meta(charset="UTF-8")
     meta(
-      name='viewport',
-      content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'
+      name="viewport",
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     )
-    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Hello Luxi Chat
-    link(rel='stylesheet', href='./styles/styles.scss')
+    link(rel="stylesheet", href="./styles/styles.scss")
 
   body
-    .chat(data-cy='chat')
+    .chat(data-cy="chat")
       .chat__header Luxi Support
         .chat__status
       .chat__hello-body
         form#hello_form.chat__hello-form
           input.chat__hello-input(
-            name='name',
-            placeholder='Input your Nickname ^^)'
+            name="name",
+            placeholder="Input your Nickname ^^)"
+            data-cy="nickname-input"
           )
-          button.chat__hello-button Go
+          button.chat__hello-button(data-cy="chat__hello-button") Go
       .chat__body.hidden
         .chat__messages
         .chat__input-field
-          input.chat__input
-    script(src='./index.ts', type='module')
+          input.chat__input(data-cy="chat-input")
+    script(src="./index.ts", type="module")

@@ -102,6 +102,7 @@ export class Message extends HTMLElement {
   static create(message: IMessage, received = false): HTMLElement {
     const $chatMessage = document.createElement('chat-message')
 
+    $chatMessage.setAttribute('data-cy', 'chat-message')
     $chatMessage.setAttribute('text', message.text)
     $chatMessage.setAttribute('date', message.date)
     if (received) {
