@@ -1,4 +1,6 @@
 # Курлык чат
+
+[![GitHub issues](https://img.shields.io/github/issues/Shadow-Dev-Squad/kurlyk-chat)](https://github.com/Shadow-Dev-Squad/kurlyk-chat/issues)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/badges/shields.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/badges/shields/context:javascript)  
 
 ![Logo](readme-images/logo.jpg | width=200)   
