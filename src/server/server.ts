@@ -5,6 +5,7 @@ const WebSocket = require('ws')
 import { WsMessage, WsMessageTypes, WsMessageUsers } from '../types'
 
 const app = express()
+app.use(express.static('dist'))
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
 
