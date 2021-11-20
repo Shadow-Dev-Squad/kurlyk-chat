@@ -1,14 +1,14 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "main": "index.js",
+  "source": "src/index.pug",
   "author": "martiiian <jkramorevx@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.pug",
-    "build": "parcel build src/index.pug",
+    "build": "parcel build src/index.pug && yarn run server:build",
+    "start": "node src/server/server.js",
     "server:build": "tsc src/server/server.ts",
-    "server:start": "node src/server/server.js",
     "cypress:open": "cypress open",
     "prettier": "prettier --write ."
   },
