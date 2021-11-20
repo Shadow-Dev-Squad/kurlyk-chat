@@ -1,9 +1,14 @@
+import * as express from 'express'
+import * as http from 'http'
 const WebSocket = require('ws')
+
 import { WsMessage, WsMessageTypes, WsMessageUsers } from '../types'
 
-const wsServer = new WebSocket.Server({ port: 9000 })
-wsServer.on('connection', onConnect)
-console.log('server started on localhost:9000')
+const app = express()
+const server = http.createServer(app)
+const wss = new WebSocket.Server({ server })
+
+wss.on('connection', onConnect)
 
 const connections: { [key: string]: WebSocket } = {}
 
@@ -62,3 +67,6 @@ function onConnect(wsClient) {
     }
   })
 }
+server.listen(9000, () => {
+  console.log('server started on localhost:9000')
+})
