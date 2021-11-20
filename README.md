@@ -1,6 +1,6 @@
 # Курлык чат
 
-![Logo](readme-images/logo.jpg)
+![Logo](readme-images/logo.jpg)  
 Экспериментальный чат[площадка], для интересных фич :)  
 Курлык! Kurlyk!
 
