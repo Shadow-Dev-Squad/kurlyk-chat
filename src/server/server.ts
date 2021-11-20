@@ -69,5 +69,5 @@ function onConnect(wsClient) {
   })
 }
 server.listen(9000, () => {
-  console.log('server started on localhost:9000')
+  console.log('Server started on http://localhost:9000')
 })
