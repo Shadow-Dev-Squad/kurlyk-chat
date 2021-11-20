@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/index.pug",
+    "build": "parcel build src/index.pug",
     "server:build": "tsc src/server/server.ts",
     "server:start": "node src/server/server.js",
     "cypress:open": "cypress open",
