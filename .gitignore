@@ -3,4 +3,3 @@ dist
 .parcel-cache
 node_modules
 .env
-types.js

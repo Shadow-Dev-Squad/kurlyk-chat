@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "parcel src/index.pug",
     "build": "parcel build src/index.pug && yarn run server:build",
-    "start": "node src/server/server.js",
-    "server:build": "tsc src/server/server.ts",
+    "server:start": "node dist/server/server.js",
+    "server:dev": "nodemon src/server/server.ts",
+    "server:build": "tsc src/server/server.ts --outDir dist",
     "cypress:open": "cypress open",
     "prettier": "prettier --write ."
   },
@@ -25,8 +26,10 @@
     "cypress": "^8.3.1",
     "cypress-pipe": "^2.0.0",
     "mock-socket": "^9.0.3",
+    "nodemon": "^2.0.15",
     "parcel": "^2.0.0-rc.0",
     "prettier": "^2.3.2",
+    "ts-node": "^10.4.0",
     "typescript": "^4.4.2"
   }
 }
