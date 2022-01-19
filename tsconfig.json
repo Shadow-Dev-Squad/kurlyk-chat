@@ -1,1 +1,15 @@
-{}
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "include": [
+    "src/**/*",
+  ],
+
+  "compilerOptions": {
+    //sorry :(
+    "noImplicitAny": false,
+    "lib": [
+      "es2016",
+      "dom"
+    ]
+  },
+}
