@@ -13,8 +13,8 @@ export class Message extends HTMLElement {
 
     this.$message = this.createMessage(
       {
-        date: this.getAttribute('date'),
-        text: this.getAttribute('text'),
+        date: this.getAttribute('date') || '',
+        text: this.getAttribute('text') || ''
       },
       received
     )
@@ -115,8 +115,8 @@ export class Message extends HTMLElement {
   // callbacks //
 
   connectedCallback() {
-    this.$text.innerText = this.getAttribute('text')
-    this.$date.innerText = this.getAttribute('date')
+    this.$text.innerText = this.getAttribute('text') || ''
+    this.$date.innerText = this.getAttribute('date') || ''
     if (this.getAttribute('received')) {
       this.$message.classList.add('message_from')
     }

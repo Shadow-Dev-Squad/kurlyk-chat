@@ -4,7 +4,7 @@ import {
   WsMessage,
   WsMessageConnection,
   WsMessageMessage,
-  WsMessageTypes,
+  WsMessageTypes
 } from './types'
 import { state } from './state'
 import { SocketService } from './services/SocketService'
@@ -18,18 +18,18 @@ const selectors = {
   chatInput: '.chat__input',
   chatBody: '.chat__body',
   helloBody: '.chat__hello-body',
-  status: '.chat__status',
+  status: '.chat__status'
 }
 
-function openBody() {
+function openBody () {
   state.$dom.$body && state.$dom.$body.classList.remove('hidden')
 }
 
-function hideHelloBody() {
+function hideHelloBody () {
   state.$dom.$helloBody && state.$dom.$helloBody.classList.add('hidden')
 }
 
-function toggleOnlineStatus(value: boolean) {
+function toggleOnlineStatus (value: boolean) {
   if (!state.$dom.$status) return
 
   if (value) {
@@ -37,7 +37,7 @@ function toggleOnlineStatus(value: boolean) {
   }
 }
 
-function parseMessage({ data }: { data: unknown }) {
+function parseMessage ({ data }: { data: unknown }) {
   if (!data || typeof data !== 'string') return
 
   const message = JSON.parse(data) as WsMessage
@@ -57,16 +57,16 @@ function parseMessage({ data }: { data: unknown }) {
   }
 }
 
-function initSockets(nickName: string) {
-  const ws = new SocketService(socketHost)
+function initSockets (nickName: string) {
+  const ws = new SocketService(socketHost || '')
   state.userId = nickName
 
   ws.on('open', () => {
     const connectionMessage: WsMessageConnection = {
       type: WsMessageTypes.connection,
       payload: {
-        id: nickName,
-      },
+        id: nickName
+      }
     }
 
     ws.send(connectionMessage)
@@ -83,7 +83,7 @@ function initSockets(nickName: string) {
   return ws
 }
 
-function waitNickname(): Promise<string> {
+function waitNickname (): Promise<string> {
   return new Promise((resolve) => {
     const $form = document.querySelector(selectors.form)
     if (!$form) return
@@ -93,14 +93,14 @@ function waitNickname(): Promise<string> {
       const $input = document.querySelector(
         selectors.nickInput
       ) as HTMLInputElement
-      if (!$input && !$input.value) return
+      if (!$input?.value) return
 
       resolve($input.value)
     })
   })
 }
 
-function initMessageInput(ws: SocketService) {
+function initMessageInput (ws: SocketService) {
   if (!state.$dom.$messageInput || !state.$dom.$messages) return null
 
   state.$dom.$messageInput.addEventListener('keydown', (e) => {
@@ -109,23 +109,24 @@ function initMessageInput(ws: SocketService) {
       !e.currentTarget ||
       !state.users.length ||
       !state.userId
-    )
-      return
+    ) { return }
 
     const $input = e.currentTarget as HTMLInputElement
 
     const message: IMessage = {
       text: $input.value,
-      date: String(new Date()),
+      date: String(new Date())
     }
 
-    state.$dom.$messages.appendChild(Message.create(message))
+    if (state.$dom.$messages) {
+      state.$dom.$messages.appendChild(Message.create(message))
+    }
 
     const wsMessage: WsMessageMessage = {
       type: WsMessageTypes.message,
       to: state.users[0],
       from: state.userId,
-      payload: message,
+      payload: message
     }
 
     ws.send(wsMessage)
@@ -134,7 +135,7 @@ function initMessageInput(ws: SocketService) {
   })
 }
 
-function initDom() {
+function initDom () {
   customElements.define('chat-message', Message)
 
   state.$dom.$messages = document.querySelector(selectors.messages)
@@ -144,7 +145,7 @@ function initDom() {
   state.$dom.$helloBody = document.querySelector(selectors.helloBody)
 }
 
-async function initApp() {
+async function initApp () {
   initDom()
 
   const ws = initSockets(await waitNickname())
