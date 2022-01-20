@@ -1,13 +1,15 @@
 import * as http from 'http'
 import { WsMessage, WsMessageTypes, WsMessageUsers } from '../types'
 
-const express = require('express')
-const app = express()
-const WebSocket = require('ws')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const AuthRoute = require('./routes/AuthRoute')
+import express = require('express')
+import WebSocket = require('ws')
+import mongoose = require('mongoose')
+import cors = require('cors')
+import { AuthRoute } from './routes/AuthRoute'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
+const app = express()
 
 app.use(express.static('dist'))
 const server = http.createServer(app)
@@ -17,7 +19,7 @@ wss.on('connection', onConnect)
 
 const connections: { [key: string]: WebSocket } = {}
 
-function getUserList (): WsMessageUsers {
+function getUserList(): WsMessageUsers {
   return {
     type: WsMessageTypes.userList,
     payload: {
@@ -26,7 +28,7 @@ function getUserList (): WsMessageUsers {
   }
 }
 
-function parseWsMessage (
+function parseWsMessage(
   message: WsMessage,
   client: WebSocket
 ): string | undefined {
@@ -53,7 +55,7 @@ function parseWsMessage (
   }
 }
 
-function onConnect (wsClient) {
+function onConnect(wsClient) {
   let connectionId
 
   wsClient.on('message', (message) => {
@@ -95,10 +97,7 @@ app.use((req, res, next) => {
 app.use(AuthRoute)
 
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.nerlr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.nerlr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 )
 
 server.listen(process.env.PORT, () => {

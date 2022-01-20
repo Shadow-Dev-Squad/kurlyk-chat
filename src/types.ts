@@ -1,20 +1,20 @@
 export interface State {
   users: string[]
-  userId: string
+  userId: string | null
   $dom: { [key: string]: null | HTMLElement }
 }
 
 export enum WsMessageTypes {
   message = 'message',
   connection = 'connection',
-  userList = 'users',
+  userList = 'users'
 }
 
 export interface IWsMessage {
   type: WsMessageTypes
   from?: string
   to?: string
-  payload: any
+  payload: unknown
 }
 
 export interface IMessage {

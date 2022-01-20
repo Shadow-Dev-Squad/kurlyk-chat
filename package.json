@@ -11,7 +11,8 @@
     "server:dev": "nodemon src/server/server.ts",
     "server:build": "tsc src/server/server.ts --outDir dist",
     "cypress:open": "cypress open",
-    "prettier": "prettier --write ."
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "@tsconfig/node14": "^1.0.1",
@@ -21,27 +22,25 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.3.0",
+    "mongodb": "^4.3.1",
     "mongoose": "^6.1.7",
     "ws": "^8.2.1"
   },
   "devDependencies": {
-    "@parcel/transformer-pug": "2.0.1",
-    "@parcel/transformer-sass": "2.0.1",
-    "@prettier/plugin-pug": "^1.16.5",
+    "@parcel/transformer-pug": "^2.2.1",
+    "@parcel/transformer-sass": "^2.2.1",
+    "@prettier/plugin-pug": "^1.19.2",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "cypress": "^8.3.1",
     "cypress-pipe": "^2.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.2.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "mock-socket": "^9.0.3",
     "nodemon": "^2.0.15",
-    "parcel": "^2.0.0-rc.0",
-    "prettier": "^2.3.2",
+    "parcel": "^2.2.1",
+    "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.2"
   }

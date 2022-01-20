@@ -17,7 +17,7 @@ describe('Chat visibility', function () {
 
           return new WebSocket(url)
         })
-      },
+      }
     })
   })
 
@@ -30,8 +30,8 @@ describe('Chat visibility', function () {
         date: new Date(),
         text: 'Hello biba, howdy?',
         from: 'nigga',
-        to: recipientName,
-      },
+        to: recipientName
+      }
     }
     const messageFromBiba = 'Hello Nigga, whasap? huh'
 
@@ -45,8 +45,8 @@ describe('Chat visibility', function () {
         JSON.stringify({
           type: 'users',
           payload: {
-            users: [recipientName, 'nigga'],
-          },
+            users: [recipientName, 'nigga']
+          }
         })
       )
 

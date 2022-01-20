@@ -1,9 +1,7 @@
-export {}
+import jwt = require('jsonwebtoken')
+import { UserModel as User } from '../models/UserModel'
 
-const jwt = require('jsonwebtoken')
-const User = require('../models/UserModel')
-
-exports.verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   const token = req.headers['x-access-token']
 
   if (!token) {
@@ -19,34 +17,42 @@ exports.verifyToken = (req, res, next) => {
   })
 }
 
-exports.checkDuplicateUsernameOrEmail = (req, res, next) => {
-  User.findOne({
-    username: req.body.username
-  }, (err, user) => {
-    if (err) {
-      res.status(500).send({ message: err })
-      return
-    }
-
-    if (user) {
-      res.status(400).send({ message: 'Failed! Username is already in use!' })
-      return
-    }
-
-    User.findOne({
-      email: req.body.email
-    }, (err, user) => {
+export const checkDuplicateUsernameOrEmail = (req, res, next) => {
+  User.findOne(
+    {
+      username: req.body.username
+    },
+    (err, user) => {
       if (err) {
         res.status(500).send({ message: err })
         return
       }
 
       if (user) {
-        res.status(400).send({ message: 'Failed! Email is already in use!' })
+        res.status(400).send({ message: 'Failed! Username is already in use!' })
         return
       }
 
-      next()
-    })
-  })
+      User.findOne(
+        {
+          email: req.body.email
+        },
+        (err, user) => {
+          if (err) {
+            res.status(500).send({ message: err })
+            return
+          }
+
+          if (user) {
+            res
+              .status(400)
+              .send({ message: 'Failed! Email is already in use!' })
+            return
+          }
+
+          next()
+        }
+      )
+    }
+  )
 }

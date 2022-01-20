@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import mongoose = require('mongoose')
 
-const UserModel = mongoose.model(
+export const UserModel = mongoose.model(
   'User',
   new mongoose.Schema({
     username: String,
@@ -8,5 +8,3 @@ const UserModel = mongoose.model(
     password: String
   })
 )
-
-module.exports = UserModel

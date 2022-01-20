@@ -1,5 +1,5 @@
 export class SocketService {
-  subscribers: { [key: string]: Array<(arg: any) => void> } = {}
+  subscribers: { [key: string]: Array<(arg: unknown) => void> } = {}
   ws
 
   constructor(socketHost: string) {
@@ -9,7 +9,7 @@ export class SocketService {
     this.ws.onmessage = (event) => this.emit('message', event)
   }
 
-  emit(action: string, event: any) {
+  emit(action: string, event: unknown) {
     const subscribers = this.subscribers[action]
     if (!subscribers) return
 

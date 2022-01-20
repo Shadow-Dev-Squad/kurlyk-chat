@@ -1,11 +1,15 @@
-const express = require('express')
+import express = require('express')
 const app = express()
 
-const helper = require('../middleware/AuthHelper')
-const controller = require('../controllers/AuthController')
+import { checkDuplicateUsernameOrEmail } from '../middleware/AuthHelper'
+import controller = require('../controllers/AuthController')
 
-app.post('/api/auth/sign-up', [helper.checkDuplicateUsernameOrEmail], controller.signup)
+app.post(
+  '/api/auth/sign-up',
+  [checkDuplicateUsernameOrEmail],
+  controller.signup
+)
 
 app.post('/api/auth/sign-in', controller.signin)
 
-module.exports = app
+export { app as AuthRoute }
