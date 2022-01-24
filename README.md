@@ -10,15 +10,15 @@
 Experimental chat[lab], for interesting features :)  
 Курлык! Kurlyk!
 
-## Как запустить
+## How to run
 - `yarn` - install dependencies
  
-### Продакшн сборку
+### Production
 - `yarn build` - build all project
 - `yarn run server:start` - start project backend and frontend
 - go to `localhost:9000`
 
-### Дев сборку
+### Development
 - `yarn server:build` - build server
 - `yarn run dev` - start frontend
 - go to `localhost:1234`
