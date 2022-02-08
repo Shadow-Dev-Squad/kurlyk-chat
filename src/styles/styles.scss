@@ -9,6 +9,10 @@
   //box-shadow: var(--chat-shadow);
   box-shadow: 1px 2px 10px #000;
   border-radius: var(--round-radius);
+  background: var(--white-color);
+  @media (prefers-color-scheme: dark) {
+    background: var(--black-color);
+  }
   &__status {
     border-radius: 50%;
     height: 10px;
